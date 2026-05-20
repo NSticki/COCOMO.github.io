@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COCOMO Calculator - TUSUR Edition</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="eula-overlay">
+        <div class="modal">
+            <h2>Лицензионное соглашение</h2>
+            <div class="eula-content">
+                <p align="center"><strong>ЛИЦЕНЗИОННОЕ СОГЛАШЕНИЕ С КОНЕЧНЫМ ПОЛЬЗОВАТЕЛЕМ (EULA)</strong></p>
+                <p align="center"><small>Редакция от мая 2026 года</small></p>
+                <br>
+                <p>Перед использованием программного обеспечения «Программный комплекс автоматизации технико-экономического обоснования проектов по методологиям COCOMO 81 и COCOMO II» (далее — Программа), пожалуйста, ознакомьтесь с условиями настоящего Лицензионного соглашения (далее — Соглашение).</p>
+                
+                <p><strong>1. ОБЩИЕ ПОЛОЖЕНИЯ</strong><br>
+                1.1. Настоящее Соглашение является юридически обязательным договором, заключаемым между Пользователем и Разработчиком (студент ТУСУР Малетин С. Н.).<br>
+                1.2. Нажатие кнопки «Принимаю» или осуществление любого взаимодействия с интерфейсом Программы означает безоговорочное согласие Пользователя со всеми пунктами настоящего Соглашения. Если вы не согласны с условиями, вы обязаны немедленно прекратить использование Программы.</p>
+
+                <p><strong>2. ПРЕДОСТАВЛЕНИЕ ЛИЦЕНЗИИ</strong><br>
+                2.1. Разработчик предоставляет Пользователю неисключительную, ограниченную, безвозмездную лицензию на использование Программы на одном вычислительном устройстве исключительно в образовательных, ознакомительных и научно-исследовательских целях.<br>
+                2.2. Запрещается коммерческое использование Программы, ее декомпиляция, модификация исходного кода (за исключением академического расширения функционала с согласия автора), а также создание производных программных продуктов с целью извлечения прибыли.</p>
+
+                <p><strong>3. ИНТЕЛЛЕКТУАЛЬНАЯ СОБСТВЕННОСТЬ</strong><br>
+                3.1. Все исключительные права на Программу, включая архитектуру данных, математические алгоритмы расчета, исходный JavaScript-код, стилистическое оформление (CSS) и текстовые материалы, принадлежат Разработчику и защищены законодательством РФ об авторском праве.<br>
+                3.2. Используемые в расчетах математические модели и базовые коэффициенты базируются на общедоступных методических материалах Б. Боэма и учебных пособиях ТУСУР (в частности, под авторством Минькова С.Л.).</p>
+
+                <p><strong>4. ОГРАНИЧЕНИЕ ОТВЕТСТВЕННОСТИ (DISCLAIMER)</strong><br>
+                4.1. ПРОГРАММА ПРЕДОСТАВЛЯЕТСЯ НА УСЛОВИЯХ «КАК ЕСТЬ» («AS IS»). Разработчик не гарантирует, что Программа будет отвечать специфическим требованиям коммерческого планирования или функционировать бесперебойно.<br>
+                4.2. Все генерируемые Программой метрики (трудоемкость в человеко-месяцах PM, календарное время выполнения TM и оптимальная численность персонала SS) носят исключительно вероятностный и прогностический характер.<br>
+                4.3. Разработчик ни при каких обстоятельствах не несет юридической и финансовой ответственности за любые убытки, включая потерю прибыли, срыв производственных графиков или ошибки планирования IT-проектов, возникшие в результате использования или невозможности использования данных расчетов.</p>
+
+                <p><strong>5. ЗАКЛЮЧИТЕЛЬНЫЕ ПОЛОЖЕНИЯ</strong><br>
+                5.1. Настоящее Соглашение регулируется в соответствии с академическим регламентом ТУСУР и действующим законодательством Российской Федерации.<br>
+                5.2. Разработчик оставляет за собой право вносить изменения в текст Соглашения без предварительного уведомления Пользователя.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-decline" id="declineBtn">Отклонить</button>
+                <button class="btn-accept" id="acceptBtn">Принимаю</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" style="display: none;">
+        <header>
+            <h1>Калькулятор COCOMO</h1>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="calc-tab">Калькулятор</button>
+                <button class="tab-btn" data-tab="author-tab">Об Авторе</button>
+            </nav>
+        </header>
+
+        <div class="container id-tab-content" id="calc-tab">
+            <div class="main-inputs">
+                <div class="card">
+                    <h3>1. Параметры модели</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Модель:</label>
+                            <select id="model-select">
+                                <option value="basic" selected>Basic COCOMO (81)</option>
+                                <option value="intermediate">Intermediate COCOMO (81)</option>
+                                <option value="early_design">COCOMO II (Early Design)</option>
+                                <option value="post_architecture">COCOMO II (Post-Architecture)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="type-container">
+                            <label>Тип проекта:</label>
+                            <select id="type-select">
+                                <option value="organic">Organic (Распространенный)</option>
+                                <option value="semidetached">Semidetached (Полунезависимый)</option>
+                                <option value="embedded">Embedded (Встроенный)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Объем кода (KSLOC):</label>
+                        <input type="number" id="size-input" value="10" step="0.1" min="0.1">
+                    </div>
+                </div>
+
+                <div class="card" id="sf-card" style="display:none;">
+                    <h3>2. Факторы масштаба (Scale Factors)</h3>
+                    <div class="param-grid" id="sf-container"></div>
+                </div>
+
+                <div class="card" id="cd-card" style="display:none;">
+                    <h3>3. Атрибуты стоимости (Cost Drivers)</h3>
+                    <div class="param-grid" id="cd-container"></div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="card results-box">
+                    <h3>Результаты</h3>
+                    <div class="res-item"><span>Трудоемкость (PM):</span><span class="res-value" id="pm-out">0.00</span></div>
+                    <div class="res-item"><span>Срок (TM):</span><span class="res-value" id="tm-out">0.00</span></div>
+                    <div class="res-item"><span>Персонал (SS):</span><span class="res-value" id="ss-out">0.00</span></div>
+                    <button class="btn-calc" id="calcBtn">Рассчитать</button>
+                </div>
+
+                <div class="card info-box">
+                    <h3>Описание модели</h3>
+                    <p id="model-desc-text">Загрузка описания...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container id-tab-content" id="author-tab" style="display: none;">
+            <div class="card author-card">
+                <h2>Информация об авторе</h2>
+                <div class="author-details">
+                    <p><strong>Разработчик:</strong> Малетин Сергей Николаевич</p>
+                    <p><strong>Статус:</strong> студент ТУСУР, ФСУ</p>
+                    <p><strong>Группа:</strong> 443-1</p>
+                    <p><strong>Дисциплина:</strong> Программная инженерия</p>
+                    <p><strong>Лабораторная работа:</strong> Автоматизация расчетов экономических показателей проекта по моделям COCOMO 81 и COCOMO II.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
